@@ -104,4 +104,10 @@ public class TipoAgenda {
         this.fecha = value;
     }
 
+	public void setTurno(List<TipoTurno> turno) {
+		this.turno = turno;
+	}
+    
+    
+
 }

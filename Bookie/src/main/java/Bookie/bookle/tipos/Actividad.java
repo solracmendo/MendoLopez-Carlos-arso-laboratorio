@@ -210,5 +210,18 @@ public class Actividad {
     public void setEmail(String value) {
         this.email = value;
     }
+    /**
+     * Define el valor de la propiedad agenda.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+	public void setAgenda(List<TipoAgenda> agenda) {
+		this.agenda = agenda;
+	}
+    
+    
 
 }
