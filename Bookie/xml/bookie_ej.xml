@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<actividad xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.example.org/bookie"
+	xsi:schemaLocation="http://www.example.org/bookie bookie.xsd"
+	id="924924792sd"
+	titulo="EXAMEN_TP"
+	descripcion="Esta es la tarea del examen de TP"
+	profesor="Hoyos">
+	<agenda fecha="2019-02-20">
+		<turno horario="10:00-12:00">
+			<reserva id="dhfuyfsdi">
+				<alumno>Carlos Mendo</alumno>
+				<email>carlos.mendol@um.es</email>
+			</reserva>	
+		</turno>
+		<turno horario="12:00-13:00">	
+		</turno>
+		<turno horario="13:00-14:00">	
+		</turno>
+		<turno horario="14:00-15:00">	
+		</turno>
+	</agenda>
+</actividad>

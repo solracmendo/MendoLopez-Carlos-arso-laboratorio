@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/bookie"
+	xmlns="http://www.example.org/bookie"
+	elementFormDefault="qualified">
+
+
+<xs:element name="actividad">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="agenda" type="TipoAgenda" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="titulo" type="xs:string" use="required"/>
+		<xs:attribute name="descripcion" type="xs:string" use="optional"/>
+		<xs:attribute name="profesor" type="xs:string" use="required"/>
+		<xs:attribute name="email" type="xs:string" use="optional"/>	
+	</xs:complexType>	
+</xs:element>
+
+<xs:complexType name="TipoAgenda">
+	<xs:sequence>
+		<xs:element name="turno" type="TipoTurno" minOccurs="1" maxOccurs="unbounded"/>
+	</xs:sequence>
+	<xs:attribute name="fecha" type="xs:date" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="TipoTurno">
+	<xs:sequence>
+		<xs:element name="reserva" type="TipoReserva" minOccurs="0" maxOccurs="1"/>
+	</xs:sequence>
+	<xs:attribute name="horario" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="TipoReserva">
+	<xs:sequence>
+		<xs:element name="alumno" type="xs:string"/>
+		<xs:element name="email" type="xs:string" minOccurs="0" />
+	</xs:sequence>
+	<xs:attribute name="id" type="xs:string" use="required"/>
+</xs:complexType>
+
+</xs:schema>
