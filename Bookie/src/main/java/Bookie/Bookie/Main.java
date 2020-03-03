@@ -1,5 +1,7 @@
 package Bookie.Bookie;
 
+import Bookie.bookle.tipos.Actividad;
+
 public class Main {
 	
 	
@@ -19,7 +21,21 @@ public class Main {
 			if(controlador.removeDiaActividad(id, Utils.dateFromString("03-12-2019"))){
 				System.out.println("Dia eliminado");
 			}
-			System.out.println(controlador.addTurnoActividad(id, Utils.dateFromString("02-12-2019")));
+			int indice_turno = controlador.addTurnoActividad(id, Utils.dateFromString("02-12-2019"));
+			System.out.println(indice_turno);
+			
+			controlador.setHorario(id, Utils.dateFromString("02-12-2019"), indice_turno, "JAJAJA");
+			
+			String id_reserva = controlador.createReserva(id, Utils.dateFromString("02-12-2019"), indice_turno, "Carlos", "carlos.mendol@um.es");
+			if(controlador.removeReserva(id, id_reserva)) {
+				System.out.println("Reserva eliminada");
+			}
+			
+			for(Actividad a : controlador.getActividades()) {
+				System.out.println(a.toString());
+			}
+			
+			
 		} catch (BookleException e) {
 			
 			e.printStackTrace();

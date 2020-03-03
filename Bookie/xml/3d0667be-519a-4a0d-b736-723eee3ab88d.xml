@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<actividad xmlns="http://www.example.org/bookie" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3d0667be-519a-4a0d-b736-723eee3ab88d" titulo="Actual_Act" descripcion="Actividad actualizada" profesor="Juanma" xsi:schemaLocation="http://www.example.org/bookie bookie.xsd">
-    <agenda fecha="2019-12-02">
-        <turno horario="10:00-12:00"/>
-        <turno horario="yyy"/>
-    </agenda>
-</actividad>
