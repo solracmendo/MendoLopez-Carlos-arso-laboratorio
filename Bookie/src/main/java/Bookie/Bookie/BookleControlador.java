@@ -3,7 +3,7 @@ package Bookie.Bookie;
 import java.util.Date;
 import java.util.LinkedList;
 
-import bookl.Actividad;
+import Bookie.bookle.tipos.*;
 
 // Controlador Caso de uso
 
