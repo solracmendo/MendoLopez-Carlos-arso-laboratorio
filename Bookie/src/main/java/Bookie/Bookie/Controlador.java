@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.jws.WebService;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -16,6 +17,7 @@ import Bookie.bookle.tipos.TipoAgenda;
 import Bookie.bookle.tipos.TipoReserva;
 import Bookie.bookle.tipos.TipoTurno;
 
+@WebService(endpointInterface="Bookie.Bookie.BookleControlador")
 public class Controlador implements BookleControlador {
 
 	@Override

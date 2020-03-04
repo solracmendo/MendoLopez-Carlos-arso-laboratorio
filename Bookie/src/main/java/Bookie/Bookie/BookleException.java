@@ -1,6 +1,9 @@
 package Bookie.Bookie;
 
+import javax.xml.ws.WebFault;
+
 @SuppressWarnings("serial")
+@WebFault
 public class BookleException extends Exception {
 
 	public BookleException(String msg, Throwable causa) {
