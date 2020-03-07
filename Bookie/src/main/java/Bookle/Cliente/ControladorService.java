@@ -17,20 +17,20 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "ControladorService", targetNamespace = "http://Bookie.Bookie/", wsdlLocation = "http://localhost:9999/ws/bookle?WSDL")
+@WebServiceClient(name = "ControladorService", targetNamespace = "http://Bookie.Bookle/", wsdlLocation = "http://localhost:9999/ws/bookle?wsdl")
 public class ControladorService
     extends Service
 {
 
     private final static URL CONTROLADORSERVICE_WSDL_LOCATION;
     private final static WebServiceException CONTROLADORSERVICE_EXCEPTION;
-    private final static QName CONTROLADORSERVICE_QNAME = new QName("http://Bookie.Bookie/", "ControladorService");
+    private final static QName CONTROLADORSERVICE_QNAME = new QName("http://Bookie.Bookle/", "ControladorService");
 
     static {
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:9999/ws/bookle?WSDL");
+            url = new URL("http://localhost:9999/ws/bookle?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -69,7 +69,7 @@ public class ControladorService
      */
     @WebEndpoint(name = "ControladorPort")
     public BookleControlador getControladorPort() {
-        return super.getPort(new QName("http://Bookie.Bookie/", "ControladorPort"), BookleControlador.class);
+        return super.getPort(new QName("http://Bookie.Bookle/", "ControladorPort"), BookleControlador.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class ControladorService
      */
     @WebEndpoint(name = "ControladorPort")
     public BookleControlador getControladorPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://Bookie.Bookie/", "ControladorPort"), BookleControlador.class, features);
+        return super.getPort(new QName("http://Bookie.Bookle/", "ControladorPort"), BookleControlador.class, features);
     }
 
     private static URL __getWsdlLocation() {

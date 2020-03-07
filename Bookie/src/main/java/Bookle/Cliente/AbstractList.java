@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="abstractList"&gt;
  *   &lt;complexContent&gt;
- *     &lt;extension base="{http://Bookie.Bookie/}abstractCollection"&gt;
+ *     &lt;extension base="{http://Bookie.Bookle/}abstractCollection"&gt;
  *       &lt;sequence&gt;
  *       &lt;/sequence&gt;
  *     &lt;/extension&gt;

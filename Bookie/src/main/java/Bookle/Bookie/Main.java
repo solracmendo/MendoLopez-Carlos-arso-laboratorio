@@ -1,6 +1,6 @@
-package Bookie.Bookie;
+package Bookle.Bookie;
 
-import Bookie.bookle.tipos.Actividad;
+import Bookle.bookle.tipos.Actividad;
 
 public class Main {
 	
@@ -11,12 +11,13 @@ public class Main {
 			String id = controlador.createActividad("abcd", "Examen abcd", "Juanjo", "juanjo@um.es");
 			System.out.println(id);
 			
-			controlador.updateActividad(id, "Actual_Act", "Actividad actualizada", "Juanma", null);
+			controlador.updateActividad(id, "Actual_Act", "Actividad actualizada", "Juanma", "c@um.es");
 			
 			/*if(controlador.removeActividad(id)) {
 				System.out.println("Actividad eliminada");
 			}
 			*/
+			
 			controlador.addDiaActividad(id, Utils.dateFromString("03-12-2019"), 2);
 			if(controlador.removeDiaActividad(id, Utils.dateFromString("03-12-2019"))){
 				System.out.println("Dia eliminado");

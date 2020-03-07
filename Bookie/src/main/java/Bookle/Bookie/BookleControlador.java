@@ -1,4 +1,4 @@
-package Bookie.Bookie;
+package Bookle.Bookie;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -7,7 +7,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-import Bookie.bookle.tipos.*;
+import Bookle.bookle.tipos.*;
 
 // Controlador Caso de uso
 

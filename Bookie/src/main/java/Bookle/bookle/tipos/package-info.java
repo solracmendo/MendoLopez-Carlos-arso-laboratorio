@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.example.org/bookie", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package Bookie.bookle.tipos;
+package Bookle.bookle.tipos;

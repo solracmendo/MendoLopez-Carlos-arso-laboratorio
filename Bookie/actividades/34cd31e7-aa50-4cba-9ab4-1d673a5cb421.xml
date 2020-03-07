@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<actividad xmlns="http://www.example.org/bookie" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="34cd31e7-aa50-4cba-9ab4-1d673a5cb421" titulo="Ejemplo_cliente" descripcion="Examen ejemplo_cliente" profesor="Sebastian" email="sebas@um.es" xsi:schemaLocation="http://www.example.org/bookie bookie.xsd">
+    <agenda fecha="2019-12-02">
+        <turno horario="10:00-12:00"/>
+    </agenda>
+</actividad>

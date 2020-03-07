@@ -18,7 +18,7 @@ import javax.xml.ws.FaultAction;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "BookleControlador", targetNamespace = "http://Bookie.Bookie/")
+@WebService(name = "BookleControlador", targetNamespace = "http://Bookie.Bookle/")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 @XmlSeeAlso({
     ObjectFactory.class
@@ -38,8 +38,8 @@ public interface BookleControlador {
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/createActividadRequest", output = "http://Bookie.Bookie/BookleControlador/createActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/createActividad/Fault/BookleException")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/createActividadRequest", output = "http://Bookie.Bookle/BookleControlador/createActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/createActividad/Fault/BookleException")
     })
     public String createActividad(
         @WebParam(name = "arg0", partName = "arg0")
@@ -50,129 +50,6 @@ public interface BookleControlador {
         String arg2,
         @WebParam(name = "arg3", partName = "arg3")
         String arg3)
-        throws BookleException_Exception
-    ;
-
-    /**
-     * 
-     * @return
-     *     returns Bookle.Cliente.LinkedList
-     * @throws BookleException_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/getActividadesRequest", output = "http://Bookie.Bookie/BookleControlador/getActividadesResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/getActividades/Fault/BookleException")
-    })
-    public LinkedList getActividades()
-        throws BookleException_Exception
-    ;
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     * @throws BookleException_Exception
-     */
-    @WebMethod
-    @Action(input = "http://Bookie.Bookie/BookleControlador/setHorarioRequest", output = "http://Bookie.Bookie/BookleControlador/setHorarioResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/setHorario/Fault/BookleException")
-    })
-    public void setHorario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        XMLGregorianCalendar arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        int arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3)
-        throws BookleException_Exception
-    ;
-
-    /**
-     * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     * @throws BookleException_Exception
-     */
-    @WebMethod
-    @Action(input = "http://Bookie.Bookie/BookleControlador/addDiaActividadRequest", output = "http://Bookie.Bookie/BookleControlador/addDiaActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/addDiaActividad/Fault/BookleException")
-    })
-    public void addDiaActividad(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        XMLGregorianCalendar arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        int arg2)
-        throws BookleException_Exception
-    ;
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns Bookle.Cliente.Actividad
-     * @throws BookleException_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/getActividadRequest", output = "http://Bookie.Bookie/BookleControlador/getActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/getActividad/Fault/BookleException")
-    })
-    public Actividad getActividad(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0)
-        throws BookleException_Exception
-    ;
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     * @throws BookleException_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/removeActividadRequest", output = "http://Bookie.Bookie/BookleControlador/removeActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/removeActividad/Fault/BookleException")
-    })
-    public boolean removeActividad(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0)
-        throws BookleException_Exception
-    ;
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     * @throws BookleException_Exception
-     */
-    @WebMethod
-    @Action(input = "http://Bookie.Bookie/BookleControlador/updateActividadRequest", output = "http://Bookie.Bookie/BookleControlador/updateActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/updateActividad/Fault/BookleException")
-    })
-    public void updateActividad(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        String arg4)
         throws BookleException_Exception
     ;
 
@@ -189,8 +66,8 @@ public interface BookleControlador {
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/createReservaRequest", output = "http://Bookie.Bookie/BookleControlador/createReservaResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/createReserva/Fault/BookleException")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/createReservaRequest", output = "http://Bookie.Bookle/BookleControlador/createReservaResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/createReserva/Fault/BookleException")
     })
     public String createReserva(
         @WebParam(name = "arg0", partName = "arg0")
@@ -208,6 +85,114 @@ public interface BookleControlador {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns Bookle.Cliente.Actividad
+     * @throws BookleException_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/getActividadRequest", output = "http://Bookie.Bookle/BookleControlador/getActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/getActividad/Fault/BookleException")
+    })
+    public Actividad getActividad(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0)
+        throws BookleException_Exception
+    ;
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @throws BookleException_Exception
+     */
+    @WebMethod
+    @Action(input = "http://Bookie.Bookle/BookleControlador/setHorarioRequest", output = "http://Bookie.Bookle/BookleControlador/setHorarioResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/setHorario/Fault/BookleException")
+    })
+    public void setHorario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        XMLGregorianCalendar arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        int arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3)
+        throws BookleException_Exception
+    ;
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     * @throws BookleException_Exception
+     */
+    @WebMethod
+    @Action(input = "http://Bookie.Bookle/BookleControlador/updateActividadRequest", output = "http://Bookie.Bookle/BookleControlador/updateActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/updateActividad/Fault/BookleException")
+    })
+    public void updateActividad(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        String arg4)
+        throws BookleException_Exception
+    ;
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     * @throws BookleException_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/removeActividadRequest", output = "http://Bookie.Bookle/BookleControlador/removeActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/removeActividad/Fault/BookleException")
+    })
+    public boolean removeActividad(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0)
+        throws BookleException_Exception
+    ;
+
+    /**
+     * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @throws BookleException_Exception
+     */
+    @WebMethod
+    @Action(input = "http://Bookie.Bookle/BookleControlador/addDiaActividadRequest", output = "http://Bookie.Bookle/BookleControlador/addDiaActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/addDiaActividad/Fault/BookleException")
+    })
+    public void addDiaActividad(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        XMLGregorianCalendar arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        int arg2)
+        throws BookleException_Exception
+    ;
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      * @return
@@ -216,8 +201,8 @@ public interface BookleControlador {
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/removeReservaRequest", output = "http://Bookie.Bookie/BookleControlador/removeReservaResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/removeReserva/Fault/BookleException")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/removeReservaRequest", output = "http://Bookie.Bookle/BookleControlador/removeReservaResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/removeReserva/Fault/BookleException")
     })
     public boolean removeReserva(
         @WebParam(name = "arg0", partName = "arg0")
@@ -229,18 +214,33 @@ public interface BookleControlador {
 
     /**
      * 
-     * @param arg1
-     * @param arg0
      * @return
-     *     returns int
+     *     returns Bookle.Cliente.LinkedList
      * @throws BookleException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/addTurnoActividadRequest", output = "http://Bookie.Bookie/BookleControlador/addTurnoActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/addTurnoActividad/Fault/BookleException")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/getActividadesRequest", output = "http://Bookie.Bookle/BookleControlador/getActividadesResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/getActividades/Fault/BookleException")
     })
-    public int addTurnoActividad(
+    public LinkedList getActividades()
+        throws BookleException_Exception
+    ;
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     * @throws BookleException_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/removeDiaActividadRequest", output = "http://Bookie.Bookle/BookleControlador/removeDiaActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/removeDiaActividad/Fault/BookleException")
+    })
+    public boolean removeDiaActividad(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
@@ -259,8 +259,8 @@ public interface BookleControlador {
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/removeTurnoActividadRequest", output = "http://Bookie.Bookie/BookleControlador/removeTurnoActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/removeTurnoActividad/Fault/BookleException")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/removeTurnoActividadRequest", output = "http://Bookie.Bookle/BookleControlador/removeTurnoActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/removeTurnoActividad/Fault/BookleException")
     })
     public boolean removeTurnoActividad(
         @WebParam(name = "arg0", partName = "arg0")
@@ -277,15 +277,15 @@ public interface BookleControlador {
      * @param arg1
      * @param arg0
      * @return
-     *     returns boolean
+     *     returns int
      * @throws BookleException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://Bookie.Bookie/BookleControlador/removeDiaActividadRequest", output = "http://Bookie.Bookie/BookleControlador/removeDiaActividadResponse", fault = {
-        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookie/BookleControlador/removeDiaActividad/Fault/BookleException")
+    @Action(input = "http://Bookie.Bookle/BookleControlador/addTurnoActividadRequest", output = "http://Bookie.Bookle/BookleControlador/addTurnoActividadResponse", fault = {
+        @FaultAction(className = BookleException_Exception.class, value = "http://Bookie.Bookle/BookleControlador/addTurnoActividad/Fault/BookleException")
     })
-    public boolean removeDiaActividad(
+    public int addTurnoActividad(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")

@@ -1,4 +1,4 @@
-package Bookie.Bookie;
+package Bookle.Bookie;
 
 import java.io.File;
 import java.util.Date;
@@ -12,12 +12,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import Bookie.bookle.tipos.Actividad;
-import Bookie.bookle.tipos.TipoAgenda;
-import Bookie.bookle.tipos.TipoReserva;
-import Bookie.bookle.tipos.TipoTurno;
+import Bookle.bookle.tipos.Actividad;
+import Bookle.bookle.tipos.TipoAgenda;
+import Bookle.bookle.tipos.TipoReserva;
+import Bookle.bookle.tipos.TipoTurno;
 
-@WebService(endpointInterface="Bookie.Bookie.BookleControlador")
+@WebService(endpointInterface="Bookle.Bookie.BookleControlador")
 public class Controlador implements BookleControlador {
 
 	@Override

@@ -6,7 +6,7 @@
 //
 
 
-package Bookie.bookle.tipos;
+package Bookle.bookle.tipos;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="linkedList"&gt;
  *   &lt;complexContent&gt;
- *     &lt;extension base="{http://Bookie.Bookie/}abstractSequentialList"&gt;
+ *     &lt;extension base="{http://Bookie.Bookle/}abstractSequentialList"&gt;
  *       &lt;sequence&gt;
  *       &lt;/sequence&gt;
  *     &lt;/extension&gt;

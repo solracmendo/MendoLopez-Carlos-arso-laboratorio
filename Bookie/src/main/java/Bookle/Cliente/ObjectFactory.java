@@ -25,7 +25,7 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _Actividad_QNAME = new QName("http://www.example.org/bookie", "actividad");
-    private final static QName _BookleException_QNAME = new QName("http://Bookie.Bookie/", "BookleException");
+    private final static QName _BookleException_QNAME = new QName("http://Bookie.Bookle/", "BookleException");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: Bookle.Cliente
@@ -103,7 +103,7 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link BookleException }{@code >}
      */
-    @XmlElementDecl(namespace = "http://Bookie.Bookie/", name = "BookleException")
+    @XmlElementDecl(namespace = "http://Bookie.Bookle/", name = "BookleException")
     public JAXBElement<BookleException> createBookleException(BookleException value) {
         return new JAXBElement<BookleException>(_BookleException_QNAME, BookleException.class, null, value);
     }

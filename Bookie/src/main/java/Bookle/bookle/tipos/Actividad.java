@@ -6,7 +6,7 @@
 //
 
 
-package Bookie.bookle.tipos;
+package Bookle.bookle.tipos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "actividad", propOrder = {
     "agenda"
 })
-@XmlRootElement(name = "actividad")
+@XmlRootElement
 public class Actividad {
 
     @XmlElement(required = true)

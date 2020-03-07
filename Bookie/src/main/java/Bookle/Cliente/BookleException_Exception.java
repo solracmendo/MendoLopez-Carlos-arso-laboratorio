@@ -10,7 +10,7 @@ import javax.xml.ws.WebFault;
  * Generated source version: 2.2
  * 
  */
-@WebFault(name = "BookleException", targetNamespace = "http://Bookie.Bookie/")
+@WebFault(name = "BookleException", targetNamespace = "http://Bookie.Bookle/")
 public class BookleException_Exception
     extends Exception
 {

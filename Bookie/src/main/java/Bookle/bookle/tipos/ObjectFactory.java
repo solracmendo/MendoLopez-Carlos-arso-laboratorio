@@ -6,7 +6,7 @@
 //
 
 
-package Bookie.bookle.tipos;
+package Bookle.bookle.tipos;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
