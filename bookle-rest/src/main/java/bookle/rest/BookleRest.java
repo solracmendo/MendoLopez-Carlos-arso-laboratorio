@@ -44,7 +44,7 @@ public class BookleRest {
 	}
 	
 	@PUT
-	@Path("/{id}")
+	@Path("{id}")
 	public Response updateActividad(@PathParam("id") String id, @FormParam("titulo") String titulo, @FormParam("descripcion") String descripcion, @FormParam("profesor") String profesor, @FormParam("email") String email) throws BookleException {
 		controlador.updateActividad(id, titulo, descripcion, profesor, email);
 		return Response.status(Response.Status.NO_CONTENT).build();
@@ -71,7 +71,7 @@ public class BookleRest {
 		
 		return Response.created(nuevaURL).build();
 	}
-	
+	/*
 	@DELETE
 	@Path("{id}/agenda/{fecha}")
 	public Response removeDiaActividad(
@@ -148,7 +148,7 @@ public class BookleRest {
 		URI nuevaURL = builder.build();
 		return Response.created(nuevaURL).build();
 	}
-	
+	*/
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public Response getActividades() throws BookleException{

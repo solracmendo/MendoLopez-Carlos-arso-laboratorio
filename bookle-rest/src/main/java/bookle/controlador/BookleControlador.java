@@ -1,5 +1,6 @@
 package bookle.controlador;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -81,4 +82,10 @@ public interface BookleControlador {
 	 * Método de consulta de todas las actividades.	
 	 */
 	LinkedList<Actividad> getActividades() throws BookleException;
+	/**
+	 * 
+	 * Método que retorna todos los identificadores
+	 */
+	Collection<String> getIdentifidores();
+
 }
