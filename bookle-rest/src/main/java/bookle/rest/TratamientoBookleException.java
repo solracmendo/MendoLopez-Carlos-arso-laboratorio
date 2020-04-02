@@ -3,9 +3,7 @@ package bookle.rest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
-import bookle.controlador.BookleException;
-
-
+/*
 public class TratamientoBookleException implements ExceptionMapper<BookleException>{
 	@Override
 	public Response toResponse(BookleException arg0) {
@@ -13,3 +11,4 @@ public class TratamientoBookleException implements ExceptionMapper<BookleExcepti
 	}
 
 }
+*/

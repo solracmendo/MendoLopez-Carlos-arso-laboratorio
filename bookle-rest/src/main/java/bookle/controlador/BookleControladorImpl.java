@@ -12,6 +12,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import bookle.rest.BookleException;
 import bookle.tipos.Actividad;
 import bookle.tipos.DiaActividad;
 import bookle.tipos.Reserva;

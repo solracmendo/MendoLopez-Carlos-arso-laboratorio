@@ -1,4 +1,4 @@
-package bookle.controlador;
+package bookle.rest;
 
 import java.net.URI;
 
@@ -20,7 +20,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import bookle.rest.BookleException;
+import bookle.controlador.BookleControlador;
+import bookle.controlador.BookleControladorImpl;
 import bookle.tipos.Actividad;
 
 @Path("actividades")

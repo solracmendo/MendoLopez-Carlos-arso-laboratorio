@@ -1,4 +1,4 @@
-package bookle.controlador;
+package bookle.rest;
 
 @SuppressWarnings("serial")
 public class BookleException extends Exception {

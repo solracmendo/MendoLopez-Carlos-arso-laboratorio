@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
+import bookle.rest.BookleException;
 import bookle.tipos.Actividad;
 
 // Controlador Caso de uso
