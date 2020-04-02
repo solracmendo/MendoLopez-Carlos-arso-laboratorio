@@ -9,5 +9,4 @@ public class TratamientoBookleException implements ExceptionMapper<BookleExcepti
 	public Response toResponse(BookleException arg0) {
 		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(arg0.getMessage()).build();
 	}
-
 }
