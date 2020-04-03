@@ -2,10 +2,11 @@ package bookle.rest;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 import bookle.controlador.RecursoNoEncontradoException;
 
-
+@Provider
 public class TratamientoRecursoNoEncontradoException implements ExceptionMapper<RecursoNoEncontradoException>{
 	@Override
 	public Response toResponse(RecursoNoEncontradoException arg0) {
