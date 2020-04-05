@@ -3,4 +3,10 @@
     <id>d204f929-841d-413f-a00e-7493a527db10</id>
     <titulo>J</titulo>
     <profesor>A</profesor>
+    <agenda>
+        <fecha>2020-12-12</fecha>
+        <turno>
+            <horario></horario>
+        </turno>
+    </agenda>
 </actividad>

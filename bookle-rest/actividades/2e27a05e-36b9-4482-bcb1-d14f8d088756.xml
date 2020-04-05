@@ -5,4 +5,24 @@
     <descripcion>JE</descripcion>
     <profesor>JE</profesor>
     <email>JE</email>
+    <agenda>
+        <fecha>2020-12-12</fecha>
+        <turno>
+            <horario></horario>
+        </turno>
+    </agenda>
+    <agenda>
+        <fecha>2022-12-12</fecha>
+        <turno>
+            <horario></horario>
+        </turno>
+        <turno>
+            <horario>FASBBFGSIYHDVBFG</horario>
+            <reserva>
+                <id>f0d706b1-e191-4361-a482-759fcffdc7fb</id>
+                <alumno>sd</alumno>
+                <email></email>
+            </reserva>
+        </turno>
+    </agenda>
 </actividad>

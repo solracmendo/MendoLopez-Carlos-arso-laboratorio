@@ -194,6 +194,12 @@ public class BookleControladorImpl implements BookleControlador {
 		// precondición
 		if (turnos <= 0)
 			throw new BookleException("El número de turnos debe ser mayor o igual que 1");
+		if(id == null || id.equals("")) {
+			throw new IllegalArgumentException("El id no debe estar vacio ni ser nulo");
+		}
+		if(fecha==null) {
+			throw new IllegalArgumentException("La fecha no debe estar vacia ni ser nula");
+		}
 
 		Actividad actividad = cargar(id);
 
@@ -223,16 +229,20 @@ public class BookleControladorImpl implements BookleControlador {
 
 	@Override
 	public boolean removeDiaActividad(String id, Date fecha) throws BookleException {
-
+		if(id == null || id.equals("")) {
+			throw new IllegalArgumentException("El id no puede ser nulo o vacio");
+		}
+		if(fecha == null) {
+			throw new IllegalArgumentException("La fecha no puede ser nulo o vacio");
+		}
 		Actividad actividad = cargar(id);
 
 		DiaActividad diaEliminar = getDia(actividad, fecha);
-
+		
 		if (diaEliminar != null) {
 
 			actividad.getAgenda().remove(diaEliminar);
 			guardar(actividad);
-
 			return true;
 		} else
 			return false;
@@ -240,7 +250,12 @@ public class BookleControladorImpl implements BookleControlador {
 
 	@Override
 	public int addTurnoActividad(String id, Date fecha) throws BookleException {
-
+		if(id == null || id.equals("")) {
+			throw new IllegalArgumentException("El id no puede ser nulo o vacio");
+		}
+		if(fecha == null) {
+			throw new IllegalArgumentException("La fecha no puede ser nulo o vacio");
+		}
 		Actividad actividad = cargar(id);
 
 		DiaActividad dia = getDia(actividad, fecha);
@@ -259,7 +274,12 @@ public class BookleControladorImpl implements BookleControlador {
 	}
 
 	public void removeTurnoActividad(String id, Date fecha, int turno) throws BookleException {
-
+		if(id == null || id.equals("")) {
+			throw new IllegalArgumentException("El id no puede ser nulo o vacio");
+		}
+		if(fecha == null) {
+			throw new IllegalArgumentException("La fecha no puede ser nulo o vacio");
+		}
 		Actividad actividad = cargar(id);
 
 		DiaActividad dia = getDia(actividad, fecha);
@@ -285,7 +305,18 @@ public class BookleControladorImpl implements BookleControlador {
 
 	@Override
 	public void setHorario(String id, Date fecha, int indice, String horario) throws BookleException {
-
+		if(id == null || id.equals("")) {
+			throw new IllegalArgumentException("El id no puede ser nulo o vacio");
+		}
+		if(fecha == null) {
+			throw new IllegalArgumentException("La fecha no puede ser nulo o vacio");
+		}
+		if(indice < 1) {
+			throw new IllegalArgumentException("El indice no es valido");
+		}
+		if(horario==null || horario.equals("")) {
+			throw new IllegalArgumentException("El horario no puede ser nulo o vacio");
+		}
 		Actividad actividad = cargar(id);
 
 		getTurno(actividad, fecha, indice).setHorario(horario);
@@ -296,7 +327,18 @@ public class BookleControladorImpl implements BookleControlador {
 
 	@Override
 	public String createReserva(String id, Date fecha, int indice, String alumno, String email) throws BookleException {
-
+		if(id == null || id.equals("")) {
+			throw new IllegalArgumentException("El id no puede ser nulo o vacio");
+		}
+		if(fecha == null) {
+			throw new IllegalArgumentException("La fecha no puede ser nulo o vacio");
+		}
+		if(indice < 1) {
+			throw new IllegalArgumentException("El indice no es valido");
+		}
+		if(alumno == null || alumno.equals("")) {
+			throw new IllegalArgumentException("El alumno no puede ser nulo o vacio");
+		}
 		Actividad actividad = cargar(id);
 
 		Turno turno = getTurno(actividad, fecha, indice);
@@ -316,7 +358,12 @@ public class BookleControladorImpl implements BookleControlador {
 
 	@Override
 	public boolean removeReserva(String id, String ticket) throws BookleException {
-
+		if(id == null || id.equals("")) {
+			throw new IllegalArgumentException("El id no puede ser nulo o vacio");
+		}
+		if(ticket == null || ticket.equals("")) {
+			throw new IllegalArgumentException("El ticket no puede ser nulo o vacio");
+		}
 		Actividad actividad = cargar(id);
 
 		boolean encontrado = false;
