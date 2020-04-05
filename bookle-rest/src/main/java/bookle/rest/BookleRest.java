@@ -1,11 +1,11 @@
 package bookle.rest;
 
 import java.net.URI;
-
-
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -14,6 +14,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -23,6 +24,8 @@ import javax.ws.rs.core.UriInfo;
 
 import bookle.controlador.BookleControlador;
 import bookle.controlador.BookleControladorImpl;
+import bookle.controlador.ItemLista;
+import bookle.controlador.ListadoActividades;
 import bookle.tipos.Actividad;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,30 +59,58 @@ public class BookleRest {
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("/{id}")
+	//Sin consumes
+	@ApiOperation(
+			value="Actualiza una actividad",
+			notes ="Actualiza una actividad usando su identificador y los datos proporcionados")
+	@ApiResponses(
+			value= {
+				@ApiResponse(code=HttpServletResponse.SC_NO_CONTENT,message=""),
+				@ApiResponse(code=HttpServletResponse.SC_NOT_FOUND, message="Actividad no encontrada"),
+				@ApiResponse(code=HttpServletResponse.SC_BAD_REQUEST, message="El formato de la peticion no es correcto")
+			})
 	public Response updateActividad(
-			@PathParam("id") String id, 
-			@FormParam("titulo") String titulo,
-			@FormParam("descripcion") String descripcion,
-			@FormParam("profesor") String profesor,
-			@FormParam("email") String email) throws BookleException {
+			@ApiParam(value="id de la actividad", required = true) @PathParam("id") String id, 
+			@ApiParam(value="titulo de la actividad", required = true) @FormParam("titulo") String titulo,
+			@ApiParam(value="descripcion de la actividad", required = false) @FormParam("descripcion") String descripcion,
+			@ApiParam(value="profesor de la actividad", required = true)@FormParam("profesor") String profesor,
+			@ApiParam(value="email asociado a la actividad", required = false)@FormParam("email") String email) throws BookleException {
 		controlador.updateActividad(id, titulo, descripcion, profesor, email);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
 	@DELETE
 	@Path("{id}")
-	public Response removeActividad(@PathParam("id") String id) throws BookleException {
+	@ApiOperation(
+			value="Elimina una actividad",
+			notes="Elimina una actividad utilizando su identificador")
+	@ApiResponses(
+			value= {
+					@ApiResponse(code=HttpServletResponse.SC_NO_CONTENT,message=""),
+					@ApiResponse(code=HttpServletResponse.SC_NOT_FOUND, message="Actividad no encontrada"),
+					@ApiResponse(code=HttpServletResponse.SC_BAD_REQUEST, message="El formato de la peticion no es correcto")
+			})
+	public Response removeActividad(@ApiParam(value="id de la actividad", required=true)@PathParam("id") String id) throws BookleException {
 		controlador.removeActividad(id);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
 	@POST
+	@ApiOperation(
+			value="Crea una actividad",
+			notes="Crea una actividad utilizando los parametros asociados",
+			response=URI.class)
+	@ApiResponses(
+			value= {
+				@ApiResponse(code=HttpServletResponse.SC_CREATED,message=""),
+				@ApiResponse(code=HttpServletResponse.SC_BAD_REQUEST,message="El formato de la peticion no es correcto")
+			})
 	public Response createActividad(
-			@FormParam("titulo") String titulo, 
-			@FormParam("descripcion") String descripcion,
-			@FormParam("profesor") String profesor, 
-			@FormParam("email") String email) throws BookleException {
+			@ApiParam(value="titulo de la actividad", required=true) @FormParam("titulo") String titulo, 
+			@ApiParam(value="descripcion de la actividad", required=false) @FormParam("descripcion") String descripcion,
+			@ApiParam(value="profesor asociado a la actividad", required=true) @FormParam("profesor") String profesor, 
+			@ApiParam(value="email asociado a la actividad", required=false) @FormParam("email") String email) throws BookleException {
 		String id = controlador.createActividad(titulo, descripcion, profesor, email);
 
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
@@ -178,12 +209,44 @@ public class BookleRest {
 	 * return Response.created(nuevaURL).build(); }
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
-	public Response getActividades() throws BookleException {
-		List<Actividad> lista = controlador.getActividades();
-		GenericEntity<List<Actividad>> entidades = new GenericEntity<List<Actividad>>(lista) {
-		};
-		return Response.status(Response.Status.OK).entity(entidades).build();
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Retorna un listado de actividades", response = ListadoActividades.class)
+	public Response listado(
+			 @ApiParam(value = "profesor de la actividad", required = false) @QueryParam("profesor") String profesor,
+			 @ApiParam(value = "titulo de la actividad", required = false) @QueryParam("titulo") String titulo) throws BookleException {
+
+	    Collection<String> actividades = controlador.getIdentifidores();
+	    ListadoActividades listado = new ListadoActividades();
+	    boolean filtrado = true;
+	    for (String id : actividades) {
+	    	filtrado = true;
+	    	Actividad act = controlador.getActividad(id);
+
+	    	if(profesor != null && act.getProfesor()!=profesor) {
+	    		filtrado = false;
+	    	}
+	    	if(titulo != null && act.getTitulo().contains(titulo) == false) {
+	    		filtrado = false;
+	    	}
+	    	
+	    	
+	    	String title = controlador.getActividad(id).getTitulo();
+	        // Cálculo de la URL
+	        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+	        builder.path(id); 	        
+	        String url =builder.build().toString();
+	        
+			ItemLista a = new ItemLista(url, title);
+			if((profesor != null && titulo != null) || filtrado == true) {
+				listado.getActividad().add(a);
+			}
+
+	        
+	        
+
+	    }
+
+	    return Response.ok(listado).build(); 
 	}
 
 }
