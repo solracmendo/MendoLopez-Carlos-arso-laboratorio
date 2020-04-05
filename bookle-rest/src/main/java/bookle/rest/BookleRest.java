@@ -5,6 +5,7 @@ import java.net.URI;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -23,9 +24,14 @@ import javax.ws.rs.core.UriInfo;
 import bookle.controlador.BookleControlador;
 import bookle.controlador.BookleControladorImpl;
 import bookle.tipos.Actividad;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
 
 @Path("actividades")
-
+@Api
 public class BookleRest {
 
 	@Context private UriInfo uriInfo;
@@ -34,8 +40,17 @@ public class BookleRest {
 
 	@GET
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_XML)
-	public Response getActividad(@PathParam("id") String id) throws BookleException {
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@ApiOperation(
+			value="Consulta una actividad",
+			notes = "Retorna una actividad utilizando su identificador",
+			response=Actividad.class)
+	@ApiResponses(
+			value= {
+				@ApiResponse(code=HttpServletResponse.SC_OK, message=""),
+				@ApiResponse(code=HttpServletResponse.SC_NOT_FOUND, message="Actividad no encontrada")
+			})	
+	public Response getActividad(@ApiParam(value="id de la actividad", required = true) @PathParam("id") String id) throws BookleException {
 		Actividad actividad = controlador.getActividad(id);
 		return Response.status(Response.Status.OK).entity(actividad).build();
 	}
