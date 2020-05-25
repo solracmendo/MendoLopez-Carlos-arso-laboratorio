@@ -27,7 +27,7 @@ public class SondeoRest {
 	@Context 
 	private UriInfo uriInfo;
 	
-	private Controlador controlador = new Controlador_Impl();
+	private Controlador_Impl controlador = Controlador_Impl.getControlador();
 	
 	@GET
 	@Path("/{id}")
@@ -58,8 +58,17 @@ public class SondeoRest {
 			@FormParam("descripcion")String descripcion,
 			@FormParam("inicio") String inicio,
 			@FormParam("fin") String fin,
-			@FormParam("minimo") Integer minimo,
-			@FormParam("maximo") Integer maximo) throws SondeoException {
+			@FormParam("minimo") String minimo,
+			@FormParam("maximo") String maximo) throws SondeoException {
+		
+		if(minimo == null)  {
+			System.out.println("ESTO ESTA MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL");
+		}
+		
+		if (maximo == null) {
+			System.out.println("ESTO ESTA MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");
+		}
+		
 		
 		String id = controlador.createSondeo(pregunta, descripcion, inicio, fin, minimo, maximo);
 		

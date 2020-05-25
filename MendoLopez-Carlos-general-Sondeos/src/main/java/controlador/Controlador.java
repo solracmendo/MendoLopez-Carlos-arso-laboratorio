@@ -4,7 +4,7 @@ import Sondeo_Info.Sondeo;
 
 public interface Controlador {
 	
-	String createSondeo(String titulo, String descripcion, String apertura, String cierre, int minimo, int maximo);
+	String createSondeo(String titulo, String descripcion, String apertura, String cierre, String minimo, String maximo);
 	
 	String anadirRespuesta(String id, String respuesta);
 	

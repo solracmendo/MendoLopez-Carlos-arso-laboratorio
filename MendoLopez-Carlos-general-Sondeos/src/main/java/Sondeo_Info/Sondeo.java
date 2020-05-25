@@ -13,8 +13,37 @@ public class Sondeo {
 	protected String fin;
 	protected Integer minimo;
 	protected Integer maximo;
+	
+	public Sondeo() {}
 
 	
+	public Sondeo(String pregunta, String descripcion, List<String> respuestas, String inicio, String fin,
+			Integer minimo, Integer maximo) {
+		super();
+		this.pregunta = pregunta;
+		this.descripcion = descripcion;
+		this.respuestas = respuestas;
+		this.inicio = inicio;
+		this.fin = fin;
+		this.minimo = minimo;
+		this.maximo = maximo;
+	}
+
+
+	public Sondeo(String id, String pregunta, String descripcion, List<String> respuestas, String inicio, String fin,
+			Integer minimo, Integer maximo) {
+		super();
+		this.id = id;
+		this.pregunta = pregunta;
+		this.descripcion = descripcion;
+		this.respuestas = respuestas;
+		this.inicio = inicio;
+		this.fin = fin;
+		this.minimo = minimo;
+		this.maximo = maximo;
+	}
+
+
 	public String getId() {
 		return id;
 	}
