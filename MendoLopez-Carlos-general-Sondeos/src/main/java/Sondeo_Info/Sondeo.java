@@ -8,7 +8,7 @@ public class Sondeo {
 	protected String id;
 	protected String pregunta;
 	protected String descripcion;
-	protected List<String> respuestas;
+	protected List<Respuesta> respuestas;
 	protected String inicio;
 	protected String fin;
 	protected Integer minimo;
@@ -17,7 +17,7 @@ public class Sondeo {
 	public Sondeo() {}
 
 	
-	public Sondeo(String pregunta, String descripcion, List<String> respuestas, String inicio, String fin,
+	public Sondeo(String pregunta, String descripcion, List<Respuesta> respuestas, String inicio, String fin,
 			Integer minimo, Integer maximo) {
 		super();
 		this.pregunta = pregunta;
@@ -30,7 +30,7 @@ public class Sondeo {
 	}
 
 
-	public Sondeo(String id, String pregunta, String descripcion, List<String> respuestas, String inicio, String fin,
+	public Sondeo(String id, String pregunta, String descripcion, List<Respuesta> respuestas, String inicio, String fin,
 			Integer minimo, Integer maximo) {
 		super();
 		this.id = id;
@@ -54,12 +54,12 @@ public class Sondeo {
 	}
 
 
-	public List<String> getRespuestas() {
+	public List<Respuesta> getRespuestas() {
 		return respuestas;
 	}
 
 
-	public void setRespuestas(List<String> respuestas) {
+	public void setRespuestas(List<Respuesta> respuestas) {
 		this.respuestas = respuestas;
 	}
 

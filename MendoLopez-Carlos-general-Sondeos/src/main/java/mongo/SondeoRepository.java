@@ -3,14 +3,18 @@ package mongo;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 
+import Sondeo_Info.Respuesta;
 import Sondeo_Info.Sondeo;
 
 import com.mongodb.client.model.Filters;
@@ -24,20 +28,22 @@ public class SondeoRepository {
 	}
 	
 	private Sondeo sondeo(Document doc) {
+
+		ArrayList<Respuesta> nuevasResps = new ArrayList<Respuesta>();
 		@SuppressWarnings("unchecked")
-		ArrayList<String> resps = (ArrayList<String>)doc.get("respuestas");
-		/*
-		BasicDBList lista = (BasicDBList) doc.get("respuestas");
-		List<String> resps = new ArrayList<String>();
-		for(Object element : lista) {
-			resps.add((String)element);
+		ArrayList<Document> resps =(ArrayList<Document>)doc.get("respuestas");
+		for(Document a : resps) {
+			String nombre = a.getString("nombre");
+			Integer cantidad = a.getInteger("cantidad");
+			Respuesta respuestaNueva = new Respuesta(nombre,cantidad);
+			nuevasResps.add(respuestaNueva);
 		}
-		*/
+		
 		return new Sondeo (
 				doc.get("_id").toString(),
 				doc.getString("pregunta"),
 				doc.getString("descripcion"),
-				resps,
+				nuevasResps,
 				doc.getString("inicio"),
 				doc.getString("fin"),
 				doc.getInteger("minimo"),
@@ -49,7 +55,7 @@ public class SondeoRepository {
 		Document doc = new Document();
 		doc.append("pregunta",sondeo.getPregunta());
 		doc.append("descripcion", sondeo.getDescripcion());
-		doc.append("respuestas",new ArrayList<String>());
+		doc.append("respuestas",new BasicDBList());
 		doc.append("inicio", sondeo.getInicio());
 		doc.append("fin", sondeo.getFin());
 		doc.append("minimo", sondeo.getMinimo());
@@ -63,12 +69,46 @@ public class SondeoRepository {
 		return sondeo(doc);
 	}
 	
-	public List<Sondeo> getAllSondeos() {
-		List<Sondeo> allSondeos = new ArrayList<>();
+	public Document findByIdDocument(String id) {
+		return sondeos.find(Filters.eq("_id", new ObjectId(id))).first();
+	}
+	
+	public ArrayList<Sondeo> getAllSondeos() {
+		ArrayList<Sondeo> allSondeos = new ArrayList<>();
 		for(Document doc : sondeos.find()) {
 			allSondeos.add(sondeo(doc));
 		}
 		return allSondeos;
+	}
+	
+	public boolean deleteById(String id) {
+		try {
+			sondeos.deleteOne(new Document("_id", new ObjectId(id)));
+			return true;
+		} catch (MongoException e) {
+			return false;
+		}
+	}
+
+	public boolean ModifyById(String id,String respuesta) {
+		try {
+			
+			Document doc = findByIdDocument(id);
+
+			@SuppressWarnings("unchecked")
+			ArrayList<BasicDBObject> lista =  (ArrayList<BasicDBObject>)doc.get("respuestas");
+			
+			
+			lista.add((new BasicDBObject("nombre", respuesta).append("cantidad",0)));
+				
+			sondeos.updateOne(Filters.eq("_id",  new ObjectId(id)), new Document("$set",new Document("respuestas", lista)));
+			
+			return true;
+			
+		} catch (MongoException e) {
+			return false;
+		}
+		
 	}
 	
 	

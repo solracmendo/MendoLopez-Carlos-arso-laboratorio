@@ -1,7 +1,12 @@
 package Rest;
 
 import java.net.URI;
+import java.util.Collection;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -20,6 +25,7 @@ import Sondeo_Info.Sondeo;
 import Sondeo_Info.SondeoException;
 import controlador.Controlador;
 import controlador.Controlador_Impl;
+import io.swagger.jaxrs.PATCH;
 
 @Path("sondeos")
 public class SondeoRest {
@@ -37,19 +43,58 @@ public class SondeoRest {
 		return Response.status(Response.Status.OK).entity(sondeo).build();
 	}
 	
-	@PUT
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllSondeos() {
+		Collection<Sondeo> sondeos = controlador.getAllSondeo();
+		JsonArrayBuilder builder = Json.createArrayBuilder();
+		
+		for(Sondeo sondeo : sondeos) {
+			UriBuilder constructor = uriInfo.getAbsolutePathBuilder();
+			constructor.path(sondeo.getId());
+			String url_sondeo = constructor.build().toString();
+			
+			JsonObject sondeoJson = Json.createObjectBuilder()
+					.add("_links",
+							Json.createObjectBuilder().add("self", Json.createObjectBuilder().add("href", url_sondeo)))
+					.add("pregunta", sondeo.getPregunta()).build();
+			
+			builder.add(sondeoJson);
+			
+		}
+		
+		JsonObject jsonSondeos = Json.createObjectBuilder()
+				.add("_links",
+						Json.createObjectBuilder().add("self",
+								Json.createObjectBuilder().add("href",
+										uriInfo.getAbsolutePathBuilder().build().toString())))
+				.add("total", sondeos.size()).add("_embedded", builder.build()).build();
+				
+				
+		
+		return Response.ok(jsonSondeos.toString()).build();
+	}
+	
+	@PATCH
 	@Path("/{id}")
 	public Response updateSondeo(@PathParam("id") String id,
 			@FormParam("respuesta") String respuesta) throws SondeoException {
-		controlador.anadirRespuesta(id, respuesta);
+		if(controlador.anadirRespuesta(id, respuesta)) {
+		
 		return Response.status(Response.Status.NO_CONTENT).build();
+		} else {
+			return Response.status(Response.Status.NOT_MODIFIED).build();
+		}
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	public Response removeSondeo(@PathParam("id") String id) throws SondeoException {
-		controlador.removeSondeo(id);
-		return Response.status(Response.Status.NO_CONTENT).build();
+		if(controlador.removeSondeo(id) == true) {
+			return Response.status(Response.Status.NO_CONTENT).build();
+		} else {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}	
 	}
 	
 	@POST
@@ -60,15 +105,6 @@ public class SondeoRest {
 			@FormParam("fin") String fin,
 			@FormParam("minimo") String minimo,
 			@FormParam("maximo") String maximo) throws SondeoException {
-		
-		if(minimo == null)  {
-			System.out.println("ESTO ESTA MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL");
-		}
-		
-		if (maximo == null) {
-			System.out.println("ESTO ESTA MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");
-		}
-		
 		
 		String id = controlador.createSondeo(pregunta, descripcion, inicio, fin, minimo, maximo);
 		
