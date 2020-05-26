@@ -90,7 +90,7 @@ public class SondeoRepository {
 		}
 	}
 
-	public boolean ModifyById(String id,String respuesta) {
+	public boolean AnadirRespuestaById(String id,String respuesta) {
 		try {
 			
 			Document doc = findByIdDocument(id);
@@ -109,6 +109,39 @@ public class SondeoRepository {
 			return false;
 		}
 		
+	}
+	
+	public boolean ResponderRespuestaById(String id, String respuesta) {
+		try {
+			
+			//Document doc = findByIdDocument(id);
+			
+			
+			//lista.add((new BasicDBObject("nombre", respuesta).append("cantidad",0)));
+				
+			//sondeos.updateOne(Filters.eq("_id",  new ObjectId(id)), new Document("$set",new Document("respuestas.$.nombre", lista)));
+			/*
+			Document principal = sondeos.find(Filters.and(
+					Filters.eq("_id", new ObjectId(id))
+						,
+					Filters.eq("respuestas.nombre", respuesta)
+					))
+					.first();
+			
+			Integer cant = principal.getInteger("cantidad");
+			
+			sondeos.updateOne(Filters.and(
+					Filters.eq("_id", new ObjectId(id))
+					,
+				Filters.eq("respuestas.nombre", respuesta)
+				), new Document("$set",new Document("cantidad", cant++)));
+			*/
+			sondeos.updateOne(Filters.and(Filters.eq("_id", new ObjectId(id)), Filters.eq("respuestas.nombre", respuesta)), new Document("$inc", new Document("respuestas.$.cantidad",1)));
+			return true;
+			
+		} catch (MongoException e) {
+			return false;
+		}
 	}
 	
 	

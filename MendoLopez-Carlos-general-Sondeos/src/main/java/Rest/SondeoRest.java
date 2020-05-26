@@ -87,6 +87,18 @@ public class SondeoRest {
 		}
 	}
 	
+	@PUT
+	@Path("/{id}")
+	public Response contestarPregunta(@PathParam("id") String id,
+			@FormParam("resolucion") String resolucion) throws SondeoException {
+		if(controlador.contestarPregunta(id, resolucion)) {
+		
+		return Response.status(Response.Status.NO_CONTENT).build();
+		} else {
+			return Response.status(Response.Status.NOT_MODIFIED).build();
+		}
+	}
+	
 	@DELETE
 	@Path("/{id}")
 	public Response removeSondeo(@PathParam("id") String id) throws SondeoException {

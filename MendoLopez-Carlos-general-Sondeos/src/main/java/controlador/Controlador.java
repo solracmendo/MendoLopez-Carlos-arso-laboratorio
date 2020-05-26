@@ -16,5 +16,7 @@ public interface Controlador {
 	boolean removeSondeo(String id);
 
 	ArrayList<Sondeo> getAllSondeo();
+	
+	public boolean contestarPregunta(String id, String pregunta);
 
 }

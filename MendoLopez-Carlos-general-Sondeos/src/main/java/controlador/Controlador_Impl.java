@@ -5,9 +5,12 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 import Sondeo_Info.Sondeo;
 import mongo.SondeoRepository;
@@ -61,7 +64,19 @@ public class Controlador_Impl implements Controlador{
 			iniciarCliente();
 		}
 		
-		boolean resultado = sondeoRepository.ModifyById(id,respuesta);
+		boolean resultado = sondeoRepository.AnadirRespuestaById(id,respuesta);
+		
+		cerrarCliente();
+		return resultado;
+	}
+	
+	@Override
+	public boolean contestarPregunta(String id, String pregunta) {
+		if(client == null) {
+			iniciarCliente();
+		}
+		
+		boolean resultado = sondeoRepository.ResponderRespuestaById(id,pregunta);
 		
 		cerrarCliente();
 		return resultado;
@@ -104,6 +119,8 @@ public class Controlador_Impl implements Controlador{
 		cerrarCliente();
 		return resultado;
 	}
+	
+	
 	
 	private static void initDB() {
 		uri = new MongoClientURI("mongodb://arso:arso-20@cluster0-shard-00-00-slp29.azure.mongodb.net:27017,cluster0-shard-00-01-slp29.azure.mongodb.net:27017,cluster0-shard-00-02-slp29.azure.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
