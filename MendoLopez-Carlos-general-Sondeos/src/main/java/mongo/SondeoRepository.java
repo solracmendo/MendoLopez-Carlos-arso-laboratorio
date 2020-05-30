@@ -69,6 +69,15 @@ public class SondeoRepository {
 		return sondeo(doc);
 	}
 	
+	public boolean existId(String id) {
+		Document doc = sondeos.find(Filters.eq("_id", new ObjectId(id))).first();
+		if(doc == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public Document findByIdDocument(String id) {
 		return sondeos.find(Filters.eq("_id", new ObjectId(id))).first();
 	}

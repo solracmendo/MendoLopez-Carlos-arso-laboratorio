@@ -45,7 +45,7 @@ public class SondeoRest {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllSondeos() {
+	public Response getAllSondeos() throws SondeoException{
 		Collection<Sondeo> sondeos = controlador.getAllSondeo();
 		JsonArrayBuilder builder = Json.createArrayBuilder();
 		
@@ -78,8 +78,9 @@ public class SondeoRest {
 	@PATCH
 	@Path("/{id}")
 	public Response updateSondeo(@PathParam("id") String id,
-			@FormParam("respuesta") String respuesta) throws SondeoException {
-		if(controlador.anadirRespuesta(id, respuesta)) {
+			@FormParam("respuesta") String respuesta,
+			@FormParam("email") String email) throws SondeoException {
+		if(controlador.anadirRespuesta(id, respuesta,email)) {
 		
 		return Response.status(Response.Status.NO_CONTENT).build();
 		} else {
@@ -90,8 +91,9 @@ public class SondeoRest {
 	@PUT
 	@Path("/{id}")
 	public Response contestarPregunta(@PathParam("id") String id,
-			@FormParam("resolucion") String resolucion) throws SondeoException {
-		if(controlador.contestarPregunta(id, resolucion)) {
+			@FormParam("resolucion") String resolucion,
+			@FormParam("email") String email) throws SondeoException {
+		if(controlador.contestarPregunta(id, resolucion, email)) {
 		
 		return Response.status(Response.Status.NO_CONTENT).build();
 		} else {
@@ -101,8 +103,9 @@ public class SondeoRest {
 	
 	@DELETE
 	@Path("/{id}")
-	public Response removeSondeo(@PathParam("id") String id) throws SondeoException {
-		if(controlador.removeSondeo(id) == true) {
+	public Response removeSondeo(@PathParam("id") String id,
+			@FormParam("email") String email) throws SondeoException {
+		if(controlador.removeSondeo(id,email) == true) {
 			return Response.status(Response.Status.NO_CONTENT).build();
 		} else {
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -116,9 +119,10 @@ public class SondeoRest {
 			@FormParam("inicio") String inicio,
 			@FormParam("fin") String fin,
 			@FormParam("minimo") String minimo,
-			@FormParam("maximo") String maximo) throws SondeoException {
+			@FormParam("maximo") String maximo,
+			@FormParam("email") String email) throws SondeoException {
 		
-		String id = controlador.createSondeo(pregunta, descripcion, inicio, fin, minimo, maximo);
+		String id = controlador.createSondeo(pregunta, descripcion, inicio, fin, minimo, maximo,email);
 		
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		builder.path(id);
