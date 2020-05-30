@@ -91,13 +91,15 @@ public class Controlador_Impl implements Controlador{
 			throw new IllegalArgumentException("El email debe ser no nulo y contener informacion");
 		}
 		
-		if(!existUsuario(email)) {
+		if(!existUsuario(email)) { //Vigilar esto por si esta bien PUESTO
 			throw new RecursoNoEncontradoException("El recurso no se encuentra en la base de datos");
 		}
 		
 		if(client == null) {
 			iniciarCliente();
 		}
+		
+		
 		try {
 			boolean resultado = usuarioRepository.isAlumno(email);
 			return resultado;
