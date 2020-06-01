@@ -1,9 +1,18 @@
 package controlador;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeoutException;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 import org.bson.types.ObjectId;
 
@@ -11,6 +20,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -22,6 +35,10 @@ import Sondeo_Info.SondeoException;
 import mongo.SondeoRepository;
 
 public class Controlador_Impl implements Controlador {
+	
+	static final int VALOR_CONTROL_PENDIENTE = 1;
+	static final int VALOR_CONTROL_COMPLETADA = 2;
+	static final int VALOR_CONTROL_ELIMINAR = 3;
 
 	private static Controlador_Impl controlador = null;
 
@@ -86,8 +103,6 @@ public class Controlador_Impl implements Controlador {
 			throw new IllegalArgumentException("El email debe ser correcto");
 		}
 
-		// COMPROBACION USUARIO VALIDO
-
 		if (isAlumno(email)) {
 			throw new UsuarioDesautorizadoException("Un estudiante no puede crear un sondeo");
 		}
@@ -106,9 +121,13 @@ public class Controlador_Impl implements Controlador {
 			sondeo.setMinimo(Integer.valueOf(minimo));
 			sondeo.setMaximo(Integer.valueOf(maximo));
 			Sondeo sondeoFinal = sondeoRepository.saveSondeo(sondeo);
+			
+			notificarColas(sondeoFinal,email,VALOR_CONTROL_PENDIENTE);
+			
 			return sondeoFinal.getId();
 		} catch (Exception e) {
 			throw new SondeoException("Se ha producido un error mientras se registraba el sondeo");
+			//e.printStackTrace();
 		} finally {
 			cerrarCliente();
 		}
@@ -245,8 +264,9 @@ public class Controlador_Impl implements Controlador {
 		if (client == null) {
 			iniciarCliente();
 		}
-
+		
 		// NOTIFICAR
+		
 		try {
 			boolean resultado = sondeoRepository.deleteById(id);
 			return resultado;
@@ -307,6 +327,86 @@ public class Controlador_Impl implements Controlador {
 		client.close();
 		client = null;
 		sondeoRepository = null;
+	}
+	
+	private void notificarColas(Sondeo sondeo, String email, int control) throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
+		
+		ConnectionFactory factory = new ConnectionFactory();
+	    factory.setUri("amqp://cikqdgnl:IpTo-xh4cN-UU2Aa0JX2nf1AN3chkLB4@squid.rmq.cloudamqp.com/cikqdgnl");
+
+	    Connection connection = factory.newConnection();
+
+	    Channel channel = connection.createChannel();
+
+	    final String exchangeName = "arso-exchange";
+	    final String queueName = "arso-queue";
+	    final String routingKey = "arso-queue";
+	   
+	    try {
+	        boolean durable = true;
+	        channel.exchangeDeclare(exchangeName, "direct", durable);
+
+	        boolean exclusive = false;
+	        boolean autodelete = false;
+	        Map<String, Object> properties = null; // sin propiedades
+	        channel.queueDeclare(queueName, durable, exclusive, autodelete, properties);    
+	        
+	        channel.queueBind(queueName, exchangeName, routingKey);
+	        
+	        String mensaje = null;
+	        if(control == VALOR_CONTROL_PENDIENTE) {
+	        	mensaje = construirTareaPendiente(sondeo);
+	        } else if (control == VALOR_CONTROL_COMPLETADA){
+	        	mensaje = construirTareaCompletada(sondeo,email);
+	        } else {
+	        	mensaje = construirTareaEliminada(sondeo);
+	        }
+            
+	        channel.basicPublish(exchangeName, routingKey, 
+	                new AMQP.BasicProperties.Builder()
+	                    .contentType("application/json")
+	                    .build()                
+	                , mensaje.getBytes());
+	    } catch (IOException e) {
+
+	        String mensaje = e.getMessage() == null ? e.getCause().getMessage() : e.getMessage();
+
+	        System.out.println("No se ha podido establecer la conexion con el exchange o la cola: \n\t->" + mensaje);
+	        
+	    } finally {
+	    	channel.close();
+	    	connection.close();
+	    }
+	}
+	
+	private String construirTareaPendiente(Sondeo sondeo) {
+		
+		JsonObject tarea = Json.createObjectBuilder()
+				.add("tipo", VALOR_CONTROL_PENDIENTE)
+				.add("nombre", sondeo.getPregunta())
+				.add("identificador", sondeo.getId())
+				.add("servicio", "sondeos").build();
+				
+				return tarea.toString();
+	}
+	
+	private String construirTareaCompletada(Sondeo sondeo, String email) {
+		JsonObject tarea = Json.createObjectBuilder()
+				.add("tipo", VALOR_CONTROL_COMPLETADA)
+				.add("email", email)
+				.add("identificador", sondeo.getId())
+				.add("servicio", "sondeos").build();
+				
+				return tarea.toString();
+	}
+	
+	private String construirTareaEliminada(Sondeo sondeo) {
+		JsonObject tarea = Json.createObjectBuilder()
+				.add("tipo", VALOR_CONTROL_ELIMINAR)
+				.add("identificador", sondeo.getId())
+				.add("servicio", "sondeos").build();
+				
+				return tarea.toString();
 	}
 
 }
