@@ -120,6 +120,8 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 
 			        String contenido = new String(body, "UTF-8");
 			        
+			       
+			        
 			        
 			       
 			        ArrayList<Usuario> listaAlumnos = new ArrayList<Usuario>();
@@ -164,6 +166,8 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 							break;
 
 						default:
+							Tarea a = new Tarea("a","a","a","a");
+							tareaRepository.saveTarea(a);
 							break;
 						}
 						
