@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Apuntate.Models;
+using Apuntate.Services;
 
 namespace MendoLopez_Carlos_general_Apuntate
 {
@@ -25,7 +28,14 @@ namespace MendoLopez_Carlos_general_Apuntate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.Configure<ApuntateDatabaseSettings>(Configuration.GetSection(nameof(ApuntateDatabaseSettings)));
+
+            services.AddSingleton<IApuntateDatabaseSettings>(sp => sp.GetRequiredService<IOptions<ApuntateDatabaseSettings>>().Value);
+
+            services.AddSingleton<ApuntateService>();
+
+            services.AddControllers()
+                .AddNewtonsoftJson(options => options.UseMemberCasing());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
