@@ -9,5 +9,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
     <PackageReference Include="MongoDB.Driver" Version="2.10.3" />
     <PackageReference Include="Json.Net" Version="1.0.22" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.0.0" />
   </ItemGroup>
 </Project>
