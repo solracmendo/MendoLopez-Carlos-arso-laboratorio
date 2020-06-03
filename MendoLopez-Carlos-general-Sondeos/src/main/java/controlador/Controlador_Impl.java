@@ -195,6 +195,10 @@ public class Controlador_Impl implements Controlador {
 		}
 		try {
 			boolean resultado = sondeoRepository.ResponderRespuestaById(id, pregunta);
+			Sondeo sondeo = sondeoRepository.findById(id);
+			
+			notificarColas(sondeo, email, VALOR_CONTROL_COMPLETADA); //Mensaje de completada
+			
 			return resultado;
 		} catch (Exception e) {
 			throw new SondeoException("Se ha producido un error al contestar");
@@ -268,7 +272,9 @@ public class Controlador_Impl implements Controlador {
 		// NOTIFICAR
 		
 		try {
+			Sondeo sondeo =  sondeoRepository.findById(id);
 			boolean resultado = sondeoRepository.deleteById(id);
+			notificarColas(sondeo, email, VALOR_CONTROL_ELIMINAR);
 			return resultado;
 		} catch (Exception e) {
 			throw new SondeoException("Se ha producido un error al intentar borrar un sondeo");
