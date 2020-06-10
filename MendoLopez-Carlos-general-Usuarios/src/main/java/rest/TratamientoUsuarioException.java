@@ -6,6 +6,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class TratamientoUsuarioException implements ExceptionMapper<UsuarioException>{
+	//Manejador global de errores
 	@Override
 	public Response toResponse(UsuarioException arg0) {
 		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

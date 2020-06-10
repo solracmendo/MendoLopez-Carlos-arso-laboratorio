@@ -6,6 +6,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class TratamientoRecursoNoEncontradoException implements ExceptionMapper<RecursoNoEncontradoException>{
+	//Manejador global de errores
 	@Override
 	public Response toResponse (RecursoNoEncontradoException arg0){
 		return Response.status(Response.Status.NOT_FOUND)
