@@ -3,8 +3,6 @@ package mongo;
 
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -27,7 +25,7 @@ public class SondeoRepository {
 		this.sondeos = sondeos;
 	}
 	
-	private Sondeo sondeo(Document doc) {
+	private Sondeo sondeo(Document doc) { //Obtener informacion de un sondeo a partir de un documento
 
 		ArrayList<Respuesta> nuevasResps = new ArrayList<Respuesta>();
 		@SuppressWarnings("unchecked")
@@ -51,7 +49,7 @@ public class SondeoRepository {
 		}
 	
 	
-	public Sondeo saveSondeo(Sondeo sondeo) {
+	public Sondeo saveSondeo(Sondeo sondeo) { //Guardar sondeo
 		Document doc = new Document();
 		doc.append("pregunta",sondeo.getPregunta());
 		doc.append("descripcion", sondeo.getDescripcion());
@@ -64,12 +62,12 @@ public class SondeoRepository {
 		return sondeo(doc);
 	}
 	
-	public Sondeo findById(String id) {
+	public Sondeo findById(String id) { //Encontrar sondeo por Id
 		Document doc = sondeos.find(Filters.eq("_id", new ObjectId(id))).first();
 		return sondeo(doc);
 	}
 	
-	public boolean existId(String id) {
+	public boolean existId(String id) { //Comprobar si existe sondeo a partir del Id
 		Document doc = sondeos.find(Filters.eq("_id", new ObjectId(id))).first();
 		if(doc == null) {
 			return false;
@@ -78,11 +76,11 @@ public class SondeoRepository {
 		}
 	}
 	
-	public Document findByIdDocument(String id) {
+	public Document findByIdDocument(String id) { //Encontrar documento de sondeo a través de Id
 		return sondeos.find(Filters.eq("_id", new ObjectId(id))).first();
 	}
 	
-	public ArrayList<Sondeo> getAllSondeos() {
+	public ArrayList<Sondeo> getAllSondeos() { //Encontrar todos los sondeos
 		ArrayList<Sondeo> allSondeos = new ArrayList<>();
 		for(Document doc : sondeos.find()) {
 			allSondeos.add(sondeo(doc));
@@ -90,7 +88,7 @@ public class SondeoRepository {
 		return allSondeos;
 	}
 	
-	public boolean deleteById(String id) {
+	public boolean deleteById(String id) { //Eliminar sondeo por Id
 		try {
 			sondeos.deleteOne(new Document("_id", new ObjectId(id)));
 			return true;
@@ -99,7 +97,7 @@ public class SondeoRepository {
 		}
 	}
 
-	public boolean AnadirRespuestaById(String id,String respuesta) {
+	public boolean AnadirRespuestaById(String id,String respuesta) { //Anadir respuesta a un sondeo por id
 		try {
 			
 			Document doc = findByIdDocument(id);
@@ -120,31 +118,9 @@ public class SondeoRepository {
 		
 	}
 	
-	public boolean ResponderRespuestaById(String id, String respuesta) {
+	public boolean ResponderRespuestaById(String id, String respuesta) { //Contestar a un sondeo
 		try {
 			
-			//Document doc = findByIdDocument(id);
-			
-			
-			//lista.add((new BasicDBObject("nombre", respuesta).append("cantidad",0)));
-				
-			//sondeos.updateOne(Filters.eq("_id",  new ObjectId(id)), new Document("$set",new Document("respuestas.$.nombre", lista)));
-			/*
-			Document principal = sondeos.find(Filters.and(
-					Filters.eq("_id", new ObjectId(id))
-						,
-					Filters.eq("respuestas.nombre", respuesta)
-					))
-					.first();
-			
-			Integer cant = principal.getInteger("cantidad");
-			
-			sondeos.updateOne(Filters.and(
-					Filters.eq("_id", new ObjectId(id))
-					,
-				Filters.eq("respuestas.nombre", respuesta)
-				), new Document("$set",new Document("cantidad", cant++)));
-			*/
 			sondeos.updateOne(Filters.and(Filters.eq("_id", new ObjectId(id)), Filters.eq("respuestas.nombre", respuesta)), new Document("$inc", new Document("respuestas.$.cantidad",1)));
 			return true;
 			

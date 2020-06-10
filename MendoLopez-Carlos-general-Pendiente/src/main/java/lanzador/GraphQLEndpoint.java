@@ -31,7 +31,6 @@ import com.sun.jersey.api.client.WebResource;
 
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.SimpleGraphQLServlet;
-import modelo.Mutation;
 import modelo.Query;
 import modelo.Tarea;
 import modelo.Usuario;
@@ -89,8 +88,8 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
         return SchemaParser.newParser()
                 .file("schema.graphqls")
                 .resolvers(
-                  new Query(tareaRepository), 
-                  new Mutation(tareaRepository))
+                  new Query(tareaRepository)) 
+                 // new Mutation(tareaRepository))
                 .build()
                 .makeExecutableSchema();
     }
@@ -104,9 +103,9 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 
         Channel channel = connection.createChannel();
 
-        final String exchangeName = "arso-exchange";
+       //final String exchangeName = "arso-exchange";
         final String queueName = "arso-queue";
-        final String routingKey = "arso-queue";
+        //final String routingKey = "arso-queue";
         
     	
 			channel.basicConsume(queueName, autoAck, "arso-consumidor", new DefaultConsumer(channel) {
@@ -114,8 +113,8 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 			    public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 			            byte[] body) throws IOException {
 			        
-			        String routingKey = envelope.getRoutingKey();
-			        String contentType = properties.getContentType();
+			      //  String routingKey = envelope.getRoutingKey();
+			       // String contentType = properties.getContentType();
 			        long deliveryTag = envelope.getDeliveryTag();
 
 			        String contenido = new String(body, "UTF-8");
@@ -166,8 +165,8 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 							break;
 
 						default:
-							Tarea a = new Tarea("a","a","a","a");
-							tareaRepository.saveTarea(a);
+							Tarea vacia = new Tarea("","","","");
+							tareaRepository.saveTarea(vacia);
 							break;
 						}
 						
@@ -180,7 +179,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 		
     }
     
-    private static void tratarPendiente(JsonObject objeto, ArrayList<Usuario> alumnos) {
+    private static void tratarPendiente(JsonObject objeto, ArrayList<Usuario> alumnos) { //Tratar mensajes pendientes
     	
     	String nombre = objeto.getString("nombre");
     	String identificador = objeto.getString("identificador");
@@ -192,7 +191,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
     	}	
     }
     
-    private static void tratarCompletada(JsonObject objeto) {
+    private static void tratarCompletada(JsonObject objeto) { //Tratar mensajes de tareas completadas
     	String email = objeto.getString("email");
     	String identificador = objeto.getString("identificador");
     	String servicio = objeto.getString("servicio");
@@ -201,7 +200,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
     	
     }
     
-    private static void tratarEliminar(JsonObject objeto) {
+    private static void tratarEliminar(JsonObject objeto) { //Tratar mensajes de eliminacion
     	String identificador = objeto.getString("identificador");
     	String servicio = objeto.getString("servicio");
     	

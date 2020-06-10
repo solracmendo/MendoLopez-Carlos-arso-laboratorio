@@ -31,7 +31,7 @@ public class UsuarioRest {
 	public Response createUsuario(
 			@FormParam("nombre") String nombre,
 			@FormParam("email") String email,
-			@FormParam("rol") String rol) throws UsuarioException {
+			@FormParam("rol") String rol) throws UsuarioException { //Operacion de creacion de usuarios
 		
 		String id = controlador.createUsuario(nombre, email, rol);
 		
@@ -48,7 +48,7 @@ public class UsuarioRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUsersRol(
-			@QueryParam("rol") String rol) throws UsuarioException{
+			@QueryParam("rol") String rol) throws UsuarioException{ //Obtener lista de usuarios por rol
 		
 		Collection<Usuario> usuariosSeleccionados = null;
 		
@@ -66,7 +66,7 @@ public class UsuarioRest {
 	@GET
 	@Path("/{email}")
 	public Response isAlumno(
-			@PathParam("email")String email) throws UsuarioException{
+			@PathParam("email")String email) throws UsuarioException{ //Comprobar si un email pertenece a un alumno
 		boolean existeAlumno = controlador.existUsuario(email);
 		if(existeAlumno) {
 		

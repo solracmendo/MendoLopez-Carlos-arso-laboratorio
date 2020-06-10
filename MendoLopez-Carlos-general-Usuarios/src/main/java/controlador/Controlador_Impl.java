@@ -28,7 +28,7 @@ public class Controlador_Impl implements Controlador{
 	}
 
 	@Override
-	public String createUsuario(String nombre, String email, String rol) throws UsuarioException{
+	public String createUsuario(String nombre, String email, String rol) throws UsuarioException{ //Creacion de un usuario
 		if(nombre == null || nombre.equals("")) {
 			throw new IllegalArgumentException("El nombre debe ser no nulo y contener informacion");
 		}
@@ -56,7 +56,7 @@ public class Controlador_Impl implements Controlador{
 	}
 
 	@Override
-	public ArrayList<Usuario> getAllProfesores() throws UsuarioException{
+	public ArrayList<Usuario> getAllProfesores() throws UsuarioException{ //Obtener todos los profesores
 		if(client == null) {
 			iniciarCliente();
 		}
@@ -71,7 +71,7 @@ public class Controlador_Impl implements Controlador{
 	}
 
 	@Override
-	public ArrayList<Usuario> getAllEstudiantes() throws UsuarioException{
+	public ArrayList<Usuario> getAllEstudiantes() throws UsuarioException{ //Obtener todos los estudiantes
 		if(client == null) {
 			iniciarCliente();
 		}
@@ -86,12 +86,12 @@ public class Controlador_Impl implements Controlador{
 	}
 
 	@Override
-	public boolean isAlumno(String email) throws UsuarioException{
+	public boolean isAlumno(String email) throws UsuarioException{ //Comprobar si un usuario es alumno
 		if(email == null || email.equals("")) {
 			throw new IllegalArgumentException("El email debe ser no nulo y contener informacion");
 		}
 		
-		if(!existUsuario(email)) { //Vigilar esto por si esta bien PUESTO
+		if(!existUsuario(email)) {
 			throw new RecursoNoEncontradoException("El recurso no se encuentra en la base de datos");
 		}
 		
@@ -111,7 +111,7 @@ public class Controlador_Impl implements Controlador{
 	}
 	
 	@Override
-	public boolean existUsuario (String email) throws UsuarioException{
+	public boolean existUsuario (String email) throws UsuarioException{ //Comprobar si existe un usuario
 		if(email == null || email.equals("")) {
 			throw new IllegalArgumentException("El email debe ser no nulo y contener informacion");
 		}
@@ -129,21 +129,21 @@ public class Controlador_Impl implements Controlador{
 		}
 	}
 	
-	private static void initDB() {
+	private static void initDB() { //Inicializar base de datos
 		uri = new MongoClientURI("mongodb://arso:arso-20@cluster0-shard-00-00-slp29.azure.mongodb.net:27017,cluster0-shard-00-01-slp29.azure.mongodb.net:27017,cluster0-shard-00-02-slp29.azure.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
 		client = new MongoClient(uri);
 		MongoDatabase mong = client.getDatabase("Users");
 		usuarioRepository = new UsuarioRepository(mong.getCollection("usuarios"));
 	}
 	
-	private static void iniciarCliente() {
+	private static void iniciarCliente() { //Iniciar cliente dentro de las operaciones
 		client = new MongoClient(uri);
 		MongoDatabase mong = client.getDatabase("Users");
 		usuarioRepository = new UsuarioRepository(mong.getCollection("usuarios"));
 		
 	}
 	
-	private static void cerrarCliente() {
+	private static void cerrarCliente() { //Cerrar cliente dentro de las operaciones
 		client.close();
 		client = null;
 		usuarioRepository = null;

@@ -4,7 +4,7 @@ public class Respuesta {
 	protected String nombre;
 	protected Integer cantidad;
 	
-	public Respuesta(String nombre, Integer cantidad) {
+	public Respuesta(String nombre, Integer cantidad) { //Respuesta de un sondeo
 		super();
 		this.nombre = nombre;
 		this.cantidad = cantidad;

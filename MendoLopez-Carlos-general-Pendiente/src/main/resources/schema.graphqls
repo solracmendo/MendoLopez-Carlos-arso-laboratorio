@@ -11,12 +11,6 @@ type Query {
 	misTareas(email: String!): [Tarea]
 }
 
-type Mutation {
-	createTarea(nombre: String!, servicio: String!, identificador: String!, email: String!): Tarea
-	completarTarea(correo: String!, identificador: String!, servicio: String!) : Boolean
-}
-
 schema {
   query: Query
-  mutation: Mutation
 }
