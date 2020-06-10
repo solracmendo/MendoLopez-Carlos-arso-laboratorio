@@ -5,7 +5,8 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class TratamientoIllegalArgumentException implements ExceptionMapper<IllegalArgumentException>{
+public class TratamientoIllegalArgumentException implements ExceptionMapper<IllegalArgumentException>{ 
+	//Controlador global de excepciones
 	
 	@Override
 	public Response toResponse(IllegalArgumentException arg0) {

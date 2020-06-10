@@ -5,21 +5,18 @@ import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 
-import org.bson.types.ObjectId;
+
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -58,7 +55,7 @@ public class Controlador_Impl implements Controlador {
 
 	@Override
 	public String createSondeo(String pregunta, String descripcion, String apertura, String cierre, String minimo,
-			String maximo, String email) throws SondeoException { // CERRAR?
+			String maximo, String email) throws SondeoException { //Creacion de un sondeo
 
 		if (pregunta == null || pregunta.equals("")) {
 			throw new IllegalArgumentException("El campo pregunta debe contener informacion valida");
@@ -134,7 +131,7 @@ public class Controlador_Impl implements Controlador {
 	}
 
 	@Override
-	public boolean anadirRespuesta(String id, String respuesta, String email) throws SondeoException {
+	public boolean anadirRespuesta(String id, String respuesta, String email) throws SondeoException { //Añadir respuesta a un sondeo
 		if (id == null || id.equals("")) {
 			throw new IllegalArgumentException("El id debe contener informacion valida");
 		}
@@ -169,7 +166,7 @@ public class Controlador_Impl implements Controlador {
 	}
 
 	@Override
-	public boolean contestarPregunta(String id, String pregunta, String email) throws SondeoException {
+	public boolean contestarPregunta(String id, String pregunta, String email) throws SondeoException { //Contestar una pregunta por un alumno
 		if (id == null || id.equals("")) {
 			throw new IllegalArgumentException("El id debe contener informacion valida");
 		}
@@ -197,7 +194,7 @@ public class Controlador_Impl implements Controlador {
 			boolean resultado = sondeoRepository.ResponderRespuestaById(id, pregunta);
 			Sondeo sondeo = sondeoRepository.findById(id);
 			
-			notificarColas(sondeo, email, VALOR_CONTROL_COMPLETADA); //Mensaje de completada
+			notificarColas(sondeo, email, VALOR_CONTROL_COMPLETADA);
 			
 			return resultado;
 		} catch (Exception e) {
@@ -208,7 +205,7 @@ public class Controlador_Impl implements Controlador {
 	}
 
 	@Override
-	public Sondeo getSondeo(String id) throws SondeoException {
+	public Sondeo getSondeo(String id) throws SondeoException { //Obtener informacion de un sondeo
 		if (id == null || id.equals("")) {
 			throw new IllegalArgumentException("El id debe contener informacion valida");
 		}
@@ -231,7 +228,7 @@ public class Controlador_Impl implements Controlador {
 	}
 
 	@Override
-	public ArrayList<Sondeo> getAllSondeo() throws SondeoException {
+	public ArrayList<Sondeo> getAllSondeo() throws SondeoException { //Obtener informacion del listado de todos los sondeos
 		if (client == null) {
 			iniciarCliente();
 		}
@@ -247,7 +244,7 @@ public class Controlador_Impl implements Controlador {
 	}
 
 	@Override
-	public boolean removeSondeo(String id, String email) throws SondeoException {
+	public boolean removeSondeo(String id, String email) throws SondeoException { //Eliminar sondeo
 
 		if (id == null || id.equals("")) {
 			throw new IllegalArgumentException("El parametro id debe contener informacion valida");
@@ -269,8 +266,6 @@ public class Controlador_Impl implements Controlador {
 			iniciarCliente();
 		}
 		
-		// NOTIFICAR
-		
 		try {
 			Sondeo sondeo =  sondeoRepository.findById(id);
 			boolean resultado = sondeoRepository.deleteById(id);
@@ -283,7 +278,7 @@ public class Controlador_Impl implements Controlador {
 		}
 	}
 
-	private boolean existeSondeo(String id) {
+	private boolean existeSondeo(String id) { //Comprobar si existe el sondeo
 		if (client == null) {
 			iniciarCliente();
 		}
@@ -298,7 +293,7 @@ public class Controlador_Impl implements Controlador {
 
 	}
 
-	private boolean isAlumno(String email) {
+	private boolean isAlumno(String email) { //Comprobar si un usuario es Alumno
 		String url_servicio = "http://localhost:8086/api/";
 		Client cliente = Client.create();
 		String path = "usuarios" + "/" + email;
@@ -308,34 +303,35 @@ public class Controlador_Impl implements Controlador {
 		int cabecera = respuesta.getStatus();
 		if (cabecera == 200) {
 			return true;
-		} else { // Si no es alumno o no está
+		} else {
 			return false;
 		}
 
 	}
 
-	private static void initDB() {
+	private static void initDB() { //Inicializar base de datos
 		uri = new MongoClientURI(
 				"mongodb://arso:arso-20@cluster0-shard-00-00-slp29.azure.mongodb.net:27017,cluster0-shard-00-01-slp29.azure.mongodb.net:27017,cluster0-shard-00-02-slp29.azure.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
 		client = new MongoClient(uri);
-		MongoDatabase mong = client.getDatabase("test");
+		MongoDatabase mong = client.getDatabase("Sondeos");
 		sondeoRepository = new SondeoRepository(mong.getCollection("sondeos"));
 	}
 
-	private static void iniciarCliente() {
+	private static void iniciarCliente() { //Inicializar base de datos dentro de cada operacion
 		client = new MongoClient(uri);
 		MongoDatabase mong = client.getDatabase("test");
 		sondeoRepository = new SondeoRepository(mong.getCollection("sondeos"));
 
 	}
 
-	private static void cerrarCliente() {
+	private static void cerrarCliente() { //Cerrar base de datos dentro de cada operacion
 		client.close();
 		client = null;
 		sondeoRepository = null;
 	}
 	
 	private void notificarColas(Sondeo sondeo, String email, int control) throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
+		//Notificar al servicio de Tareas Pendientes los eventos ocurridos durante la ejecucion
 		
 		ConnectionFactory factory = new ConnectionFactory();
 	    factory.setUri("amqp://cikqdgnl:IpTo-xh4cN-UU2Aa0JX2nf1AN3chkLB4@squid.rmq.cloudamqp.com/cikqdgnl");

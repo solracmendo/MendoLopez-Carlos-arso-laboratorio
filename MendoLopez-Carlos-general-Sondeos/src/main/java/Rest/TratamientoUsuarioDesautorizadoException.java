@@ -6,6 +6,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class TratamientoUsuarioDesautorizadoException implements ExceptionMapper<UsuarioDesautorizadoException>{
+	//Controlador global de excepciones
 	@Override
 	public Response toResponse(UsuarioDesautorizadoException arg0) {
 		return Response.status(Response.Status.UNAUTHORIZED).entity(arg0.getMessage()).build();
