@@ -6,7 +6,7 @@ namespace Apuntate.Models{
         public string identificador{get;set;}
         public string servicio{get;set;}
 
-        public MensajePendiente (int tipo, string nombre, string identificador){
+        public MensajePendiente (int tipo, string nombre, string identificador){ //Mensaje para establecer tareas pendientes
             this.tipo = tipo;
             this.nombre = nombre;
             this.identificador = identificador;

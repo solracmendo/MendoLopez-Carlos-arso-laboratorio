@@ -6,7 +6,7 @@ namespace Apuntate.Models{
         public string identificador{get;set;}
         public string servicio{get;set;}
 
-        public MensajeCompletado(int tipo, string email, string identificador){
+        public MensajeCompletado(int tipo, string email, string identificador){ //Mensaje enviado cuando un alumno se asigna a un turno
             this.tipo = tipo;
             this.email = email;
             this.identificador = identificador;
