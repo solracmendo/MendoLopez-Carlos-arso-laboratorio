@@ -4,7 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLRootResolver;
 
 import mongo.TareaRepository;
 
-public class Mutation implements GraphQLRootResolver{
+public class Mutation implements GraphQLRootResolver{ //Clase con operaciones de mutacion (NO UTILIZADA)
 	
 	private final TareaRepository tareaRepository;
 	
